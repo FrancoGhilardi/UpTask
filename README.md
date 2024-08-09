@@ -1,4 +1,4 @@
-*Mejorar la visual en un futuro*
+_Mejorar la visual en un futuro_
 
 Version de node utilizada v18.17.0
 
