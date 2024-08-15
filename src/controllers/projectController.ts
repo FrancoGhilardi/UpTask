@@ -11,7 +11,7 @@ export class ProjectController {
 
       res.send("Project created successfully");
     } catch (error) {
-      console.log(error.message);
+      res.status(500).json({ error: "Hubo un error" });
     }
   };
 
@@ -22,14 +22,14 @@ export class ProjectController {
 
       res.json(projects);
     } catch (error) {
-      console.log(error);
+      res.status(500).json({ error: "Hubo un error" });
     }
   };
 
   static getProjectsById = async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
-      const project = await Project.findById(id);
+      const project = await Project.findById(id).populate("tasks");
 
       if (!project) {
         const error = new Error("Project not found");
@@ -46,17 +46,19 @@ export class ProjectController {
   static updateProjectById = async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
-      const project = await Project.findByIdAndUpdate(id, req.body);
+      const project = await Project.findById(id);
 
       if (!project) {
         const error = new Error("Project not found");
         return res.status(404).json({ error: error.message });
       }
-
+      project.projectName = req.body.projectName;
+      project.clientName = req.body.clientName;
+      project.description = req.body.description;
       await project.save();
       res.send("Project updated successfully");
     } catch (error) {
-      console.log(error);
+      res.status(500).json({ error: "Hubo un error" });
     }
   };
 
@@ -74,7 +76,7 @@ export class ProjectController {
       await project.deleteOne();
       res.send("Project deleted successfully");
     } catch (error) {
-      console.log(error);
+      res.status(500).json({ error: "Hubo un error" });
     }
   };
 }
