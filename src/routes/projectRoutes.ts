@@ -1,9 +1,14 @@
 import { Router } from "express";
 import { body, param } from "express-validator";
-import { ProjectController } from "../controllers/projectController";
 import { handleImputError } from "../middleware/validations";
+import { ProjectController } from "../controllers/projectController";
+import { TaskController } from "../controllers/TaskController";
+import { projectExists } from "../middleware/project";
+import { taskBelongsToProject, taskExists } from "../middleware/task";
 
 const router = Router();
+/**ROUTES FOR PROJECT */
+
 //--------POST--------//
 router.post(
   "/",
@@ -41,6 +46,55 @@ router.delete(
   param("id").isMongoId().withMessage("Id is not valid"),
   handleImputError,
   ProjectController.deleteProjectById
+);
+
+/**ROUTES FOR TASK */
+router.param("projectId", projectExists);
+router.param("taskId", taskExists);
+router.param("taskId", taskBelongsToProject);
+//--------POST--------//
+router.post(
+  "/:projectId/tasks",
+  body("name").notEmpty().withMessage("Name required"),
+  body("description").notEmpty().withMessage("Description required"),
+  handleImputError,
+  TaskController.createTask
+);
+
+router.post(
+  "/:projectId/tasks/:taskId/status",
+  param("taskId").isMongoId().withMessage("Id is not valid"),
+  body("status").notEmpty().withMessage("Status is required"),
+  handleImputError,
+  TaskController.updateStatus
+);
+
+//--------GET--------//
+router.get("/:projectId/tasks", TaskController.getProjectTask);
+
+router.get(
+  "/:projectId/tasks/:taskId",
+  param("taskId").isMongoId().withMessage("Id is not valid"),
+  handleImputError,
+  TaskController.getTaskById
+);
+
+//--------PUT--------//
+router.put(
+  "/:projectId/tasks/:taskId",
+  param("taskId").isMongoId().withMessage("Id is not valid"),
+  body("name").notEmpty().withMessage("Name required"),
+  body("description").notEmpty().withMessage("Description required"),
+  handleImputError,
+  TaskController.updateTaskById
+);
+
+//--------DELETE--------//
+router.delete(
+  "/:projectId/tasks/:taskId",
+  param("taskId").isMongoId().withMessage("Id is not valid"),
+  handleImputError,
+  TaskController.deleteTaskById
 );
 
 export default router;
