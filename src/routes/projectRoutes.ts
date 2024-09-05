@@ -5,9 +5,12 @@ import { ProjectController } from "../controllers/projectController";
 import { TaskController } from "../controllers/TaskController";
 import { projectExists } from "../middleware/project";
 import { taskBelongsToProject, taskExists } from "../middleware/task";
+import { authenticate } from "../middleware/auth";
 
 const router = Router();
 /**ROUTES FOR PROJECT */
+
+router.use(authenticate);
 
 //--------POST--------//
 router.post(
