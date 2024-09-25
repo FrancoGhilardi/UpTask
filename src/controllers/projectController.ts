@@ -19,7 +19,10 @@ export class ProjectController {
   static getAllProjects = async (req: Request, res: Response) => {
     try {
       const projects = await Project.find({
-        $or: [{ manager: { $in: req.user.id } }],
+        $or: [
+          { manager: { $in: req.user.id } },
+          { team: { $in: req.user.id } },
+        ],
       });
       res.json(projects);
     } catch (error) {
@@ -36,7 +39,10 @@ export class ProjectController {
         const error = new Error("¡Proyecto no encontrado!");
         return res.status(404).json({ error: error.message });
       }
-      if (project.manager.toString() !== req.user.id.toString()) {
+      if (
+        project.manager.toString() !== req.user.id.toString() &&
+        !project.team.includes(req.user.id)
+      ) {
         const error = new Error("¡Accion no valida!");
         return res.status(404).json({ error: error.message });
       }

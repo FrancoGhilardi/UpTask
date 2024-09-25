@@ -17,7 +17,6 @@ export const taskExists = async (
   try {
     const { taskId } = req.params;
     const task = await Task.findById(taskId);
-
     if (!task) {
       const error = new Error("Task not found");
       return res.status(404).json({ error: error.message });
@@ -35,6 +34,18 @@ export const taskBelongsToProject = async (
   next: NextFunction
 ) => {
   if (req.task.project.toString() !== req.project.id.toString()) {
+    const error = new Error("Task not valid");
+    return res.status(400).json({ error: error.message });
+  }
+  next();
+};
+
+export const hasAuthorization = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.user.id.toString() !== req.project.manager.toString()) {
     const error = new Error("Task not valid");
     return res.status(400).json({ error: error.message });
   }
