@@ -17,7 +17,6 @@ router.post(
       throw new Error("¡Las contraseñas no coinciden!");
     }
     return true;
-    1;
   }),
   body("email").isEmail().withMessage("¡El email no es valido!"),
   handleImputError,
@@ -77,5 +76,34 @@ router.post(
 );
 
 router.get("/user", authenticate, AuthController.user);
+
+/**Profile */
+router.put(
+  "/profile",
+  authenticate,
+  body("name").notEmpty().withMessage("¡El nombre no puede ir vacio!"),
+  body("email").isEmail().withMessage("¡El email no es valido!"),
+  handleImputError,
+  AuthController.updateProfile
+);
+
+router.post(
+  "/update-password",
+  authenticate,
+  body("current_password")
+    .notEmpty()
+    .withMessage("!La contraseña actual no puede ir vacio!"),
+  body("password")
+    .isLength({ min: 8 })
+    .withMessage("¡Contraseña demasiado corta, minimo 8 caracteres!"),
+  body("password_confirmation").custom((value, { req }) => {
+    if (value !== req.body.password) {
+      throw new Error("¡Las contraseñas no coinciden!");
+    }
+    return true;
+  }),
+  handleImputError,
+  AuthController.updateCurrentUserPassword
+);
 
 export default router;
