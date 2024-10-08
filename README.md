@@ -1,28 +1,29 @@
-# Administrador de Tareas para Proyectos Empresariales
+# Backend del Administrador de Tareas para Proyectos Empresariales
 
-Este proyecto es una plataforma de gestión de tareas diseñada para proyectos empresariales. El objetivo es facilitar la organización y control de las tareas dentro de un equipo de trabajo, proporcionando una interfaz intuitiva y fácil de usar.
+Este proyecto es el backend del administrador de tareas para proyectos empresariales. Está desarrollado con Node.js y TypeScript, utilizando una serie de tecnologías para garantizar seguridad, escalabilidad y eficiencia en la gestión de usuarios, autenticación, y tareas.
 
 ## Tecnologías Utilizadas
 
-El proyecto fue desarrollado utilizando las siguientes tecnologías:
-
-- **React**: Biblioteca principal para la construcción de la interfaz de usuario.
-- **Vite**: Herramienta rápida de desarrollo que ofrece tiempos de carga rápidos y un entorno de desarrollo ágil.
-- **Zod**: Utilizado para la validación de esquemas en el frontend.
-- **TanStack Query**: Manejo eficiente del estado del servidor y caché de datos.
-- **TailwindCSS**: Framework de utilidades CSS para el diseño y estilización rápida.
-- **Axios**: Para realizar peticiones HTTP a la API de backend.
-- **React DOM**: Para manipulación del DOM en aplicaciones React.
-- **React Hook Form**: Manejo de formularios de manera eficiente.
-- **React Toastify**: Para la gestión de notificaciones y mensajes emergentes (toasts).
+- **Node.js**: Entorno de ejecución para el código JavaScript en el servidor.
+- **TypeScript**: Superset de JavaScript que añade tipado estático.
+- **Express**: Framework minimalista para construir aplicaciones web y APIs.
+- **Express Validator**: Middleware para la validación de los datos de las solicitudes HTTP.
+- **bcrypt**: Para el hash y la verificación segura de contraseñas.
+- **CORS**: Middleware para habilitar CORS (Cross-Origin Resource Sharing).
+- **dotenv**: Manejo de variables de entorno.
+- **jsonwebtoken (JWT)**: Para la autenticación y generación de tokens de acceso seguros.
+- **Mongoose**: Modelado de datos y conexión a MongoDB.
+- **Morgan**: Middleware para registro de solicitudes HTTP.
+- **Nodemailer**: Para el envío de correos electrónicos en el sistema.
 
 ## Requisitos
 
 - **Node.js**: Versión 18.18.0 o superior.
+- **MongoDB**: Base de datos NoSQL para el almacenamiento de datos.
 
 ## Instalación
 
-Para instalar las dependencias del proyecto, ejecuta el siguiente comando en la raíz del proyecto:
+Para instalar las dependencias del proyecto, ejecuta el siguiente comando en la raíz del backend:
 
 ```bash
 npm install
